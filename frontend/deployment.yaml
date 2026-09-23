@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smart-cold-chain-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: smart-cold-chain-frontend
+  template:
+    metadata:
+      labels:
+        app: smart-cold-chain-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: srri/smart-cold-chain-frontend:1.0
+          ports:
+            - containerPort: 80
