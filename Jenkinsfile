@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "smart-cold-chain-frontend"
+        KUBECONFIG = "C:\\Users\\ramku\\.kube\\config"
     }
 
     stages {
@@ -35,22 +36,26 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 bat '''
-                    kubectl apply -f frontend\\deployment.yaml
-                    kubectl apply -f frontend\\service.yaml
+                    kubectl config use-context docker-desktop
+
+                    kubectl apply -f frontend\\deployment.yaml --validate=false
+                    kubectl apply -f frontend\\service.yaml --validate=false
+
                     kubectl set image deployment/smart-cold-chain-frontend frontend=%IMAGE_NAME%:%BUILD_NUMBER%
+
+                    kubectl rollout status deployment/smart-cold-chain-frontend
                 '''
             }
         }
-
     }
 
     post {
         success {
             echo 'CI/CD pipeline completed successfully!'
         }
+
         failure {
             echo 'CI/CD pipeline failed.'
         }
     }
 }
-
