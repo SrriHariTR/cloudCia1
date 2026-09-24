@@ -34,19 +34,10 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'dockerhub-jenkins-test',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASSWORD'
-                    )
-                ]) {
-                    bat '''
-                        echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USER% --password-stdin
-                        docker push %IMAGE_NAME%:%BUILD_NUMBER%
-                        docker push %IMAGE_NAME%:latest
-                    '''
-                }
+                bat '''
+                    docker push %IMAGE_NAME%:%BUILD_NUMBER%
+                    docker push %IMAGE_NAME%:latest
+                '''
             }
         }
 
