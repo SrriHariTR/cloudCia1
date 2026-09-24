@@ -1,8 +1,9 @@
+```groovy
 pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "srri/smart-cold-chain-frontend"
+        IMAGE_NAME = "smart-cold-chain-frontend"
     }
 
     stages {
@@ -32,15 +33,6 @@ pipeline {
             }
         }
 
-        stage('Docker Push') {
-            steps {
-                bat '''
-                    docker push %IMAGE_NAME%:%BUILD_NUMBER%
-                    docker push %IMAGE_NAME%:latest
-                '''
-            }
-        }
-
         stage('Deploy to Kubernetes') {
             steps {
                 bat '''
@@ -62,4 +54,4 @@ pipeline {
         }
     }
 }
-
+```
