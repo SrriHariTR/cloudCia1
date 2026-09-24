@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -36,7 +37,7 @@ pipeline {
             steps {
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'dockerhub-credentials',
+                        credentialsId: 'dockerhub-jenkins-test',
                         usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASSWORD'
                     )
@@ -71,3 +72,4 @@ pipeline {
         }
     }
 }
+```
